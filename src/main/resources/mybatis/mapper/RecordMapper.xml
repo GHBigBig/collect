@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjg.collect.dao.mapper.RecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zjg.collect.dao.model.Record" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="domain_name" property="domainName" jdbcType="VARCHAR" />
+    <result column="image_number" property="imageNumber" jdbcType="INTEGER" />
+    <result column="one_size" property="oneSize" jdbcType="BIGINT" />
+    <result column="one_time" property="oneTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, domain_name, image_number, one_size, one_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zjg.collect.dao.model.RecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from records
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from records
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zjg.collect.dao.model.RecordExample" >
+    delete from records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zjg.collect.dao.model.Record" >
+    insert into records (id, domain_name, image_number, 
+      one_size, one_time)
+    values (#{id,jdbcType=BIGINT}, #{domainName,jdbcType=VARCHAR}, #{imageNumber,jdbcType=INTEGER}, 
+      #{oneSize,jdbcType=BIGINT}, #{oneTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zjg.collect.dao.model.Record" >
+    insert into records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="domainName != null" >
+        domain_name,
+      </if>
+      <if test="imageNumber != null" >
+        image_number,
+      </if>
+      <if test="oneSize != null" >
+        one_size,
+      </if>
+      <if test="oneTime != null" >
+        one_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="domainName != null" >
+        #{domainName,jdbcType=VARCHAR},
+      </if>
+      <if test="imageNumber != null" >
+        #{imageNumber,jdbcType=INTEGER},
+      </if>
+      <if test="oneSize != null" >
+        #{oneSize,jdbcType=BIGINT},
+      </if>
+      <if test="oneTime != null" >
+        #{oneTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zjg.collect.dao.model.RecordExample" resultType="java.lang.Integer" >
+    select count(*) from records
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update records
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.domainName != null" >
+        domain_name = #{record.domainName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageNumber != null" >
+        image_number = #{record.imageNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.oneSize != null" >
+        one_size = #{record.oneSize,jdbcType=BIGINT},
+      </if>
+      <if test="record.oneTime != null" >
+        one_time = #{record.oneTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update records
+    set id = #{record.id,jdbcType=BIGINT},
+      domain_name = #{record.domainName,jdbcType=VARCHAR},
+      image_number = #{record.imageNumber,jdbcType=INTEGER},
+      one_size = #{record.oneSize,jdbcType=BIGINT},
+      one_time = #{record.oneTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zjg.collect.dao.model.Record" >
+    update records
+    <set >
+      <if test="domainName != null" >
+        domain_name = #{domainName,jdbcType=VARCHAR},
+      </if>
+      <if test="imageNumber != null" >
+        image_number = #{imageNumber,jdbcType=INTEGER},
+      </if>
+      <if test="oneSize != null" >
+        one_size = #{oneSize,jdbcType=BIGINT},
+      </if>
+      <if test="oneTime != null" >
+        one_time = #{oneTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zjg.collect.dao.model.Record" >
+    update records
+    set domain_name = #{domainName,jdbcType=VARCHAR},
+      image_number = #{imageNumber,jdbcType=INTEGER},
+      one_size = #{oneSize,jdbcType=BIGINT},
+      one_time = #{oneTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
